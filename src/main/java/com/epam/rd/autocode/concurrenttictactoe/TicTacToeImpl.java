@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 public class TicTacToeImpl implements TicTacToe {
 
-    final static char xM='X';
-    final static char oM='O';
-    char prevMark =oM;
+    static final char X_M ='X';
+    static final char O_M ='O';
+    char prevMark = O_M;
 
     char[][] board;
 
@@ -15,10 +15,10 @@ public class TicTacToeImpl implements TicTacToe {
     }
 
     @Override
-    synchronized public void setMark(int x, int y, char mark) {
-        if(x>2||y>2||(mark!=xM&&mark!=oM))
+    public synchronized void setMark(int x, int y, char mark) {
+        if(x>2 || y > 2 || (mark != X_M && mark != O_M))
             throw new IllegalArgumentException();
-        if (board[x][y]==' ') {
+        if (board[x][y] == ' ') {
             board[x][y] = mark;
             prevMark = mark;
         }
@@ -27,12 +27,12 @@ public class TicTacToeImpl implements TicTacToe {
     }
 
     @Override
-    synchronized public char[][] table() {
+    public synchronized char[][] table() {
         return Arrays.stream(board).map(char[]::clone).toArray(char[][]::new); //clone the board to a new char table
     }
 
     @Override
-    synchronized public char lastMark() {
+    public synchronized char lastMark() {
         return prevMark;
     }
 

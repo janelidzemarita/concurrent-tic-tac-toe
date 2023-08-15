@@ -14,20 +14,20 @@ public class PlayerImpl implements Player {
 
     @Override
     public boolean wonBoard(char[][] table) {
-        final char xM='X';
-        final char oM='O';
+        char xM = 'X';
+        char oM = 'O';
 
-        for(int i=0; i<=2;i++){
-            if(table[0][i]==xM&&table[1][i]==xM&&table[2][i]==xM||table[0][i]==oM&&table[1][i]==oM&&table[2][i]==oM)
+        for (int i = 0; i <= 2; i++) {
+            if ((table[0][i] == xM || table[0][i] == oM) && table[0][i] == table[1][i] && table[1][i] == table[2][i])
                 return true;
-            if(table[i][0]==xM&&table[i][1]==xM&&table[i][2]==xM||table[i][0]==oM&&table[i][1]==oM&&table[i][2]==oM)
+            if ((table[i][0] == xM || table[i][0] == oM) && table[i][0] == table[i][1] && table[i][1] == table[i][2])
                 return true;
         }
-        return table[0][0] == xM && table[1][1] == xM && table[2][2] == xM
-                || table[0][2] == xM && table[1][1] == xM && table[2][0] == xM
-                || table[0][0] == oM && table[1][1] == oM && table[2][2] == oM
-                || table[0][2] == oM && table[1][1] == oM && table[2][0] == oM;
+
+        return (table[0][0] == xM || table[0][0] == oM) && table[0][0] == table[1][1] && table[1][1] == table[2][2]
+                || (table[0][2] == xM || table[0][2] == oM) && table[0][2] == table[1][1] && table[1][1] == table[2][0];
     }
+
 
     @Override
     public void run() {
@@ -39,7 +39,7 @@ public class PlayerImpl implements Player {
                     }
                     if ((!wonBoard(ticTacToe.table())))
                         ticTacToe.setMark(strategy.computeMove(mark, ticTacToe).row, strategy.computeMove(mark, ticTacToe).column, mark);
-                    ticTacToe.notify();
+                    ticTacToe.notifyAll();
                 }  //check if the board has 3 consecutive marks on any line
             } catch (InterruptedException e) {
                 e.printStackTrace();
